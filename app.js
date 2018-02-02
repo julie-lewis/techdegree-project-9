@@ -18,7 +18,7 @@ const dailyTrafficChartCanvas = document.getElementById('daily-traffic-bar-chart
 const mobileUsersChartCanvas = document.getElementById('mobile-users-doughnut-chart');
 const trafficChart = newTrafficChart(['16-22', '23-29', '30-5', '6-12', '13-19', '20-26', '27-3', '4-10', '11-17', '18-24', '25-31'], [700, 1250, 750, 1200, 1700, 1400, 1600, 1200, 1900, 1600, 1900]);
 // MemberSearch
-const userSearchField = document.querySelector("input[id='user-search']");
+const userSearch = document.querySelector("input[id='user-search']");
 const userDatalist = document.getElementById('matching-users');
 let searchResult = [];
 //Users
@@ -203,32 +203,25 @@ $.ajax({
     populate(users);
   }
 });
-
-// CHANGE FIRST CHARACTER TO UPPERCASE
+// Add UPPERCASE to 1st char
 function firstUp(string){
   return string[0].toUpperCase() + string.substring(1);
 }
-
-// POPULATE MEMBER SECTIONS using Random Users API https://randomuser.me
+//Generate ransom users from randomuser.me
 function populate(randomUsers){
-
-  //Variable declaration
   const newMembersDiv = document.getElementById('new-members');
   const recentActivityDiv = document.getElementById('recent-activity');
   const membersActivity = [" posted YourApp's SEO Tips", " commented on Facebook's Changes for 2016",
     " liked the post Facebook's Changes for 2016", " commented on YourApp's SEO Tips"];
-  const activityTime = ['1 day ago', '5 hours ago', '5 hours ago', '4 hours ago'];
-
-  // Loop through random users to populate member sections
+  const activityTime = ['2 days ago', '12 hours ago', '15 hours ago', '1 hour ago'];
+  // !!! )(%)^@%%)%%@%^^@^^^
+  // ------------------------------------>>>>>>>>>>>>>>> CHECK DATA HERE
+  // %(#))^&@^@@@@@@@@@@@@@@@@@!!!
   for (let i = 0; i < randomUsers.length; i++) {
-
     const member = randomUsers[i];
-
-    // Wrapper div for user info
     const memberDiv = document.createElement('div');
     memberDiv.className = 'member';
-
-    //MEMBER AVATAR
+    //INPUT MEMBER AVATAR
     const imageDiv = document.createElement('div');
     const img = document.createElement('img');
     img.src = member.picture.thumbnail;
@@ -236,26 +229,20 @@ function populate(randomUsers){
     img.className ='avatar';
     imageDiv.appendChild(img);
     memberDiv.appendChild(imageDiv);
-
-    // Use the 4 first users to populate "New Members" specific info
+    // Input 4 New Members
     if (i <= 3){
-
-      // Wrapping div
       const detailsDiv = document.createElement('div');
-
-      // Name
+      //Name
       const name = document.createElement('p');
       name.className = 'member-name';
       name.innerHTML = firstUp(member.name.first) + ' ' + firstUp(member.name.last);
       detailsDiv.appendChild(name);
-
       // Email
       const email = document.createElement('p');
       email.innerHTML = member.email;
       email.className = 'member-email';
       detailsDiv.appendChild(email);
       memberDiv.appendChild(detailsDiv);
-
       // Signup Date
       const dateDiv = document.createElement('div');
       dateDiv.className = 'flex-item-last member-signup';
@@ -264,33 +251,26 @@ function populate(randomUsers){
       signupDate.innerHTML = new Date(member.registered).toLocaleDateString('en-US', dateOptions);
       dateDiv.appendChild(signupDate);
       memberDiv.appendChild(dateDiv);
-
-      // Line break between members
+      // HR between individual members
       newMembersDiv.appendChild(memberDiv);
       if (i < 3){
         const line = document.createElement('hr');
         newMembersDiv.appendChild(line);
       }
-
     }
-    // The 4 last users populates "Recent Activity" specific info
+    // Input 4 different "Recent Activity" members
     else {
-
-      // Wrapping div
       const activityDiv = document.createElement('div');
       memberDiv.appendChild(activityDiv);
-
       // Activity
       const activity = document.createElement('p');
       activity.innerHTML = firstUp(member.name.first) + ' ' + firstUp(member.name.last) + membersActivity[i -4];
       activityDiv.appendChild(activity);
-
       // Time
       const time = document.createElement('p');
       time.innerHTML = activityTime[i -4];
       time.className = 'activity-time';
       activityDiv.appendChild(time);
-
       // Signup Date
       const arrowDiv = document.createElement('div');
       arrowDiv.className = 'flex-item-last';
@@ -299,8 +279,7 @@ function populate(randomUsers){
       arrow.className = 'activity-arrow';
       arrowDiv.appendChild(arrow);
       memberDiv.appendChild(arrowDiv);
-
-      // Add linebreak if not the last one
+      // HR between activity entries
       recentActivityDiv.appendChild(memberDiv);
       if (i < 7){
         const line = document.createElement('hr');
@@ -313,128 +292,78 @@ function populate(randomUsers){
 // ********************************************
 // MESSAGE USER
 // ********************************************
-
 // SEARCH FOR USER
-userSearchField.onkeyup = function(){
-
-  // Variabe declaration
-  const input = userSearchField.value;
+userSearch.onkeyup = function(){
+  const input = userSearch.value;
   searchResult = [];
   let options = '';
-
-  // Refresh datalist for every character added or removed in iput field
+  // Checking typing in input field
   while (userDatalist.firstChild) {
     userDatalist.removeChild(userDatalist.firstChild);
   }
-
-  // Only look for a match if it's not an empty string
+  // Checking for blank input
   if (input !== ''){
-
-    //If match save to search result
+    //Loop thru and check for match
     for (let i = 0; i < users.length; i++){
       if (users[i].name.first.includes(input) || users[i].name.first.includes(input)){
         searchResult.push(users[i]);
       }
     }
-
-    // Add datalist options with search result
+    // Populate search options
     for (let i = 0; i < searchResult.length; i++) {
       const name = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
       options += '<option value="' + name + '" />';
       userDatalist.innerHTML = options;
     }
-
   }
-
 };
-
 // SEND BUTTON
 sendButton.addEventListener('click', function(e){
-
-  const userSearchField = document.querySelector("input[id='user-search']");
-  const writtenMessage = document.getElementById('message').value;
+  const userSearch = document.querySelector("input[id='user-search']");
+  const userMessage = document.getElementById('message').value;
   let validUser = false;
   for (let i = 0; i < searchResult.length; i++) {
-
-    const userN = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
-
-    if (userN === userSearchField.value){
+    const userInfo = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
+    if (userInfo === userSearch.value){
       validUser = true;
     }
   }
-
-  // Validate and display message
-  if (writtenMessage !== '' && writtenMessage !== null && validUser === true){
-
+  // Check input and display submit message
+  if (userMessage !== '' && userMessage !== null && validUser === true){
     message = 'Message sent successfully';
     messageNotification.innerHTML = (message);
     messageDiv.appendChild(messageNotification);
-
   }
   else {
-
     message = 'Please choose a member and write a message';
     messageNotification.innerHTML = (message);
     messageDiv.appendChild(messageNotification);
     let validUser = false;
-
   }
-
 });
 
 // ********************************************
-// SETTINGS
+// SAVE SETTINGS IN LOCAL STORAGE
 // ********************************************
-
-// Test for local storage before saving to it
+// Test for local storage
 if ('localStorage' in window && window['localStorage'] !== null){
-
-  // Variable declaration
   const emailSwitch = document.getElementById('switch-email');
   const publicSwitch = document.getElementById('switch-public');
   const timeZone = document.getElementById('time-zone');
   const saveButton = document.getElementById('save-settings');
   const cancelButton = document.getElementById('cancel-settings');
-
-  // Add event listener to save button and save settings to local storage
+  // Add event listener to save button and to local storage
   saveButton.addEventListener('click', function () {
-
     localStorage.publicState = publicSwitch.checked;
     localStorage.emailState = emailSwitch.checked;
     localStorage.selectedIndex = timeZone.selectedIndex;
     localStorage.exists = true;
 
   });
-
-  // Make sure saved settings shows as displayed
+  // Check saved settings
   if (localStorage.exists) {
-
     publicSwitch.checked = JSON.parse(localStorage.publicState);
     emailSwitch.checked = JSON.parse(localStorage.emailState);
     timeZone.selectedIndex = localStorage.selectedIndex;
-
   }
-
 }
-
-
-  
-
-
-
-
-
-
-
-
-   
-    
-    
-    
-
-
-
-
-
-
-
