@@ -2,32 +2,31 @@
 // VARIABLES
 // ********************************************
 //Top Layer
-const wrapper = document.getElementsByClassName('wrapper')[0];
-const body = document.body;
-let modalNumber = 0;
+var body = document.body;
+var modalNumber = 0;
 //Notifications
-const notification = document.getElementById('notification');
-const bell = document.getElementById('bell');
+var notification = document.getElementById('notification');
+var bell = document.getElementById('bell');
 // Alert Box
-const alert = document.getElementById('alert');
-const closeAlert = document.getElementById('close-alert');
+var alertBox = document.getElementById('alert');
+var closeAlert = document.getElementById('close-alert');
 // Charts
-const statFilterButtons = document.getElementsByClassName('stat-filter');
-const trafficChartCanvas = document.getElementById('traffic-line-chart');
-const dailyTrafficChartCanvas = document.getElementById('daily-traffic-bar-chart');
-const mobileUsersChartCanvas = document.getElementById('mobile-users-doughnut-chart');
-const trafficChart = newTrafficChart(['16-22', '23-29', '30-5', '6-12', '13-19', '20-26', '27-3', '4-10', '11-17', '18-24', '25-31'], [700, 1250, 750, 1200, 1700, 1400, 1600, 1200, 1900, 1600, 1900]);
+var statFilterButtons = document.getElementsByClassName('stat-filter');
+var trafficChartCanvas = document.getElementById('traffic-line-chart');
+var dailyTrafficChartCanvas = document.getElementById('daily-traffic-bar-chart');
+var mobileUsersChartCanvas = document.getElementById('mobile-users-doughnut-chart');
+var trafficChart = newTrafficChart(['16-22', '23-29', '30-5', '6-12', '13-19', '20-26', '27-3', '4-10', '11-17', '18-24', '25-31'], [700, 1250, 750, 1200, 1700, 1400, 1600, 1200, 1900, 1600, 1900]);
 // MemberSearch
-const userSearch = document.querySelector("input[id='user-search']");
-const userDatalist = document.getElementById('matching-users');
-let searchResult = [];
+var userSearch = document.querySelector("input[id='user-search']");
+var userDatalist = document.getElementById('matching-users');
+var searchResult = [];
 //Users
-let users = null;
+var users = null;
 //Send Message
-const sendButton = document.getElementById('send');
-const messageDiv = document.getElementById('message-user');
-let message = '';
-let messageNotification = document.createElement('p');
+var sendButton = document.getElementById('send');
+var messageDiv = document.getElementById('message-user');
+var message = '';
+var messageNotification = document.createElement('p');
 
 // ********************************************
 // NOTIFICATIONS & ALERT BOX
@@ -42,39 +41,39 @@ bell.addEventListener('click', function(event){
 //Creates overlay divs for modal messages if modals exist
 function modal(notification){
   if(modalNumber === 0){
-    const modal = document.createElement('div');
+    var modal = document.createElement('div');
     modal.id = 'overlay';
     modal.className = 'overlay';
     body.appendChild(modal);
   }
   modalNumber++;
   //Puts modal content div 'modal' inside 'overlay' div
-  const modal = document.getElementById('overlay');
-  const modalContent = document.createElement('div');
+  var modalOverlay = document.getElementById('overlay');
+  var modalContent = document.createElement('div');
   modalContent.id = 'modal'+modalNumber;
   modalContent.className = 'modal';
   modalContent.setAttribute('style', 'z-index: 100; border-radius: 5px');
-  modal.appendChild(modalContent);
+  modalOverlay.appendChild(modalContent);
   //Inputs modal notification inside new p in 'modal' div
-  const notice = document.createElement('p');
+  var notice = document.createElement('p');
   notice.innerHTML = notification;
   modalContent.appendChild(notice);
   //Creates closing 'X' and removes modal notifications when clicked
-  const close = document.createElement('p');
+  var close = document.createElement('p');
   close.className = 'close-modal';
   close.innerHTML = 'x';
   close.addEventListener('click', function(){
     modalContent.setAttribute('style', 'display: none');
     modalNumber--;
     if(modalNumber === 0){
-      modal.remove();
+      modalOverlay.remove();
     }
   });
   modalContent.appendChild(close);
 }
 // CLOSES ALERT BOX ON CLICK
 closeAlert.addEventListener('click', function(){
-  alert.setAttribute('style', 'display: none');
+  alertBox.setAttribute('style', 'display: none');
 });
 
 // ********************************************
@@ -123,25 +122,25 @@ for (button of statFilterButtons){
       button.classList.remove('active-filter');
     }
     this.classList.add('active-filter');
-    const clickedButton = this.innerHTML;
+    var clickedButton = this.innerHTML;
 
     if (clickedButton === 'Hourly') {
-      const chart = newTrafficChart(['9am', '10am', '11am', '12am', '1pm', '2pm', '3m', '4pm', '5pm'], [750, 400, 650, 750, 1000, 500, 450, 200, 600]);
+      var chart = newTrafficChart(['9am', '10am', '11am', '12am', '1pm', '2pm', '3m', '4pm', '5pm'], [750, 400, 650, 750, 1000, 500, 450, 200, 600]);
     }
     else if (clickedButton === 'Daily') {
       console.log('Daily');
-      const chart = newTrafficChart(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], [1400, 1800, 1500, 1800, 700, 600, 1400]);
+      var chart = newTrafficChart(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], [1400, 1800, 1500, 1800, 700, 600, 1400]);
     }
     else if (clickedButton === 'Weekly') {
-      const chart = newTrafficChart(['1', '2', '3', '4', '5'], [1500, 1300, 1200, 1800, 1600]);
+      var chart = newTrafficChart(['1', '2', '3', '4', '5'], [1500, 1300, 1200, 1800, 1600]);
     }
     else if (clickedButton === 'Monthly') {
-      const chart = newTrafficChart(['January', 'February', 'March', 'April', 'May', 'June'], [1000, 2000, 5000, 3000, 3500, 4000]);
+      var chart = newTrafficChart(['January', 'February', 'March', 'April', 'May', 'June'], [1000, 2000, 5000, 3000, 3500, 4000]);
     }
   });
 }
 // DAILY TRAFFIC CHART
-const dailyTrafficChart = new Chart(dailyTrafficChartCanvas, {
+var dailyTrafficChart = new Chart(dailyTrafficChartCanvas, {
   type: 'bar',
     data: {
       labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
@@ -167,7 +166,7 @@ const dailyTrafficChart = new Chart(dailyTrafficChartCanvas, {
   }
 });
 // MOBILE USERS CHART
-const mobileUsersChart = new Chart(mobileUsersChartCanvas, {
+var mobileUsersChart = new Chart(mobileUsersChartCanvas, {
   type: 'doughnut',
     data: {
       labels: ['Phones', 'Tablets', 'Desktop'],
@@ -209,21 +208,18 @@ function firstUp(string){
 }
 //Generate ransom users from randomuser.me
 function populate(randomUsers){
-  const newMembersDiv = document.getElementById('new-members');
-  const recentActivityDiv = document.getElementById('recent-activity');
-  const membersActivity = [" posted YourApp's SEO Tips", " commented on Facebook's Changes for 2016",
+  var newMembersDiv = document.getElementById('new-members');
+  var recentActivityDiv = document.getElementById('recent-activity');
+  var membersActivity = [" posted YourApp's SEO Tips", " commented on Facebook's Changes for 2016",
     " liked the post Facebook's Changes for 2016", " commented on YourApp's SEO Tips"];
-  const activityTime = ['2 days ago', '12 hours ago', '15 hours ago', '1 hour ago'];
-  // !!! )(%)^@%%)%%@%^^@^^^
-  // ------------------------------------>>>>>>>>>>>>>>> CHECK DATA HERE
-  // %(#))^&@^@@@@@@@@@@@@@@@@@!!!
-  for (let i = 0; i < randomUsers.length; i++) {
-    const member = randomUsers[i];
-    const memberDiv = document.createElement('div');
+  var recentActivity = ['4 hours ago', '5 hours ago', '5 hours ago', '1 day ago'];
+  for (var i = 0; i < randomUsers.length; i++) {
+    var member = randomUsers[i];
+    var memberDiv = document.createElement('div');
     memberDiv.className = 'member';
     //INPUT MEMBER AVATAR
-    const imageDiv = document.createElement('div');
-    const img = document.createElement('img');
+    var imageDiv = document.createElement('div');
+    var img = document.createElement('img');
     img.src = member.picture.thumbnail;
     img.alt = firstUp(member.name.first) + ' ' + firstUp(member.name.last);
     img.className ='avatar';
@@ -231,50 +227,50 @@ function populate(randomUsers){
     memberDiv.appendChild(imageDiv);
     // Input 4 New Members
     if (i <= 3){
-      const detailsDiv = document.createElement('div');
+      var detailsDiv = document.createElement('div');
       //Name
-      const name = document.createElement('p');
+      var name = document.createElement('p');
       name.className = 'member-name';
       name.innerHTML = firstUp(member.name.first) + ' ' + firstUp(member.name.last);
       detailsDiv.appendChild(name);
       // Email
-      const email = document.createElement('p');
+      var email = document.createElement('p');
       email.innerHTML = member.email;
       email.className = 'member-email';
       detailsDiv.appendChild(email);
       memberDiv.appendChild(detailsDiv);
       // Signup Date
-      const dateDiv = document.createElement('div');
+      var dateDiv = document.createElement('div');
       dateDiv.className = 'flex-item-last member-signup';
-      const signupDate = document.createElement('p');
-      const dateOptions = { month: '2-digit', day: '2-digit', year: '2-digit'};
+      var signupDate = document.createElement('p');
+      var dateOptions = { month: '2-digit', day: '2-digit', year: '2-digit'};
       signupDate.innerHTML = new Date(member.registered).toLocaleDateString('en-US', dateOptions);
       dateDiv.appendChild(signupDate);
       memberDiv.appendChild(dateDiv);
       // HR between individual members
       newMembersDiv.appendChild(memberDiv);
       if (i < 3){
-        const line = document.createElement('hr');
+        var line = document.createElement('hr');
         newMembersDiv.appendChild(line);
       }
     }
     // Input 4 different "Recent Activity" members
     else {
-      const activityDiv = document.createElement('div');
+      var activityDiv = document.createElement('div');
       memberDiv.appendChild(activityDiv);
       // Activity
-      const activity = document.createElement('p');
+      var activity = document.createElement('p');
       activity.innerHTML = firstUp(member.name.first) + ' ' + firstUp(member.name.last) + membersActivity[i -4];
       activityDiv.appendChild(activity);
       // Time
-      const time = document.createElement('p');
-      time.innerHTML = activityTime[i -4];
+      var time = document.createElement('p');
+      time.innerHTML = recentActivity[i -4];
       time.className = 'activity-time';
       activityDiv.appendChild(time);
       // Signup Date
-      const arrowDiv = document.createElement('div');
+      var arrowDiv = document.createElement('div');
       arrowDiv.className = 'flex-item-last';
-      const arrow = document.createElement('p');
+      var arrow = document.createElement('p');
       arrow.innerHTML = '›';
       arrow.className = 'activity-arrow';
       arrowDiv.appendChild(arrow);
@@ -282,7 +278,7 @@ function populate(randomUsers){
       // HR between activity entries
       recentActivityDiv.appendChild(memberDiv);
       if (i < 7){
-        const line = document.createElement('hr');
+        var line = document.createElement('hr');
         recentActivityDiv .appendChild(line);
       }
     }
@@ -294,9 +290,9 @@ function populate(randomUsers){
 // ********************************************
 // SEARCH FOR USER
 userSearch.onkeyup = function(){
-  const input = userSearch.value;
+  var input = userSearch.value;
   searchResult = [];
-  let options = '';
+  var options = '';
   // Checking typing in input field
   while (userDatalist.firstChild) {
     userDatalist.removeChild(userDatalist.firstChild);
@@ -304,14 +300,14 @@ userSearch.onkeyup = function(){
   // Checking for blank input
   if (input !== ''){
     //Loop thru and check for match
-    for (let i = 0; i < users.length; i++){
+    for (var i = 0; i < users.length; i++){
       if (users[i].name.first.includes(input) || users[i].name.first.includes(input)){
         searchResult.push(users[i]);
       }
     }
     // Populate search options
-    for (let i = 0; i < searchResult.length; i++) {
-      const name = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
+    for (var i = 0; i < searchResult.length; i++) {
+      var name = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
       options += '<option value="' + name + '" />';
       userDatalist.innerHTML = options;
     }
@@ -319,11 +315,11 @@ userSearch.onkeyup = function(){
 };
 // SEND BUTTON
 sendButton.addEventListener('click', function(e){
-  const userSearch = document.querySelector("input[id='user-search']");
-  const userMessage = document.getElementById('message').value;
-  let validUser = false;
-  for (let i = 0; i < searchResult.length; i++) {
-    const userInfo = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
+  var userSearch = document.querySelector("input[id='user-search']");
+  var userMessage = document.getElementById('message').value;
+  var validUser = false;
+  for (var i = 0; i < searchResult.length; i++) {
+    var userInfo = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
     if (userInfo === userSearch.value){
       validUser = true;
     }
@@ -338,20 +334,19 @@ sendButton.addEventListener('click', function(e){
     message = 'Please choose a member and write a message';
     messageNotification.innerHTML = (message);
     messageDiv.appendChild(messageNotification);
-    let validUser = false;
+    var validUser = false;
   }
 });
 
 // ********************************************
 // SAVE SETTINGS IN LOCAL STORAGE
 // ********************************************
-// Test for local storage
+// Test for existence of local storage
 if ('localStorage' in window && window['localStorage'] !== null){
-  const emailSwitch = document.getElementById('switch-email');
-  const publicSwitch = document.getElementById('switch-public');
-  const timeZone = document.getElementById('time-zone');
-  const saveButton = document.getElementById('save-settings');
-  const cancelButton = document.getElementById('cancel-settings');
+  var emailSwitch = document.getElementById('switch-email');
+  var publicSwitch = document.getElementById('switch-public');
+  var timeZone = document.getElementById('time-zone');
+  var saveButton = document.getElementById('save-settings');
   // Add event listener to save button and to local storage
   saveButton.addEventListener('click', function () {
     localStorage.publicState = publicSwitch.checked;

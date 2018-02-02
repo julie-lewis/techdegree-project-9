@@ -1,13 +1,13 @@
 /*************
 MAIN STYLES
 *************/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,700');
 
 * {
   box-sizing: border-box; 
 }
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 h1 {
   font-size: 1.5em;
@@ -39,6 +39,9 @@ button {
   color: #ffffff;
   text-transform: uppercase;
   margin-bottom: .5em; 
+}
+.bold {
+  font-weight: 700;
 }
 
 /*************
@@ -102,9 +105,6 @@ header .user-name {
   font-size: 1em;
   font-weight: 300; 
   color: #fff;
-}
-.logo .bold {
-  font-weight: 700;
 }
 .avatar {
   width: 40px;
@@ -259,7 +259,7 @@ FORMS
 input,
 select,
 textarea {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   color: #808080;
   width: 100%;
