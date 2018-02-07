@@ -76,6 +76,7 @@ closeAlert.addEventListener('click', function(){
   alertBox.setAttribute('style', 'display: none');
 });
 
+
 // ********************************************
 // TRAFFIC CHARTS
 // ********************************************
@@ -290,7 +291,7 @@ function populate(randomUsers){
 // ********************************************
 // SEARCH FOR USER
 userSearch.onkeyup = function(){
-  var input = userSearch.value;
+  var input = userSearch.value.toLowerCase();
   searchResult = [];
   var options = '';
   // Checking typing in input field
@@ -301,7 +302,7 @@ userSearch.onkeyup = function(){
   if (input !== ''){
     //Loop thru and check for match
     for (var i = 0; i < users.length; i++){
-      if (users[i].name.first.includes(input) || users[i].name.first.includes(input)){
+      if (users[i].name.first.includes(input) || users[i].name.last.includes(input)){
         searchResult.push(users[i]);
       }
     }
@@ -318,8 +319,8 @@ sendButton.addEventListener('click', function(e){
   var userSearch = document.querySelector("input[id='user-search']");
   var userMessage = document.getElementById('message').value;
   var validUser = false;
-  for (var i = 0; i < searchResult.length; i++) {
-    var userInfo = firstUp(searchResult[i].name.first) + ' ' + firstUp(searchResult[i].name.last);
+  for (var i = 0; i < users.length; i++) {
+    var userInfo = firstUp(users[i].name.first) + ' ' + firstUp(users[i].name.last);
     if (userInfo === userSearch.value){
       validUser = true;
     }
